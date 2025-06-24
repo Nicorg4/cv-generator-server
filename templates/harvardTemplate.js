@@ -9,49 +9,100 @@ module.exports = function generateHTML(data) {
     languages
   } = data
 
-  const section = (title, content) => `
-    <h2>${title}</h2>
-    ${content}
-  `
+  const formatLinks = links.map(link => `<a href="${link.url}" target="_blank">${link.name}</a>`).join(' | ')
 
-  const formatLinks = links.map(link => `<p><a href="${link.url}" target="_blank">${link.name}</a></p>`).join('')
   const formatSkills = skills.map(cat => `
-    <h3>${cat.categoryName}</h3>
-    <ul>${cat.skills.map(skill => `<li>${skill}</li>`).join('')}</ul>
+    <p><strong>${cat.categoryName}:</strong> ${cat.skills.join(', ')}</p>
   `).join('')
+
   const formatExp = experience.map(exp => `
-    <div>
-      <strong>${exp.position}</strong> at <em>${exp.company}</em> (${exp.startDate} - ${exp.current ? 'Present' : exp.endDate})
-      <p>${exp.description}</p>
+    <div style="margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; font-weight: bold;">
+        <span>${exp.position}, ${exp.company}</span>
+        <span>${exp.currentlyWorking ? 'Present' : exp.endDate} | ${exp.startDate}</span>
+      </div>
+      <ul style="margin-top: 6px;">
+        ${exp.description.split('\n').map(bullet => `<li>${bullet}</li>`).join('')}
+      </ul>
     </div>
   `).join('')
+
   const formatEdu = education.map(edu => `
-    <p><strong>${edu.name}</strong>, ${edu.institution} (${edu.year})</p>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+      <div><strong>${edu.name}</strong>, ${edu.institution}</div>
+      <div>${edu.ongoing ? 'In progress' : edu.year}</div>
+    </div>
   `).join('')
-  const formatLangs = languages.map(lang => `<p>${lang.language} - ${lang.level}</p>`).join('')
+
+  const formatLangs = languages.map(lang => `<p>${lang.language}: ${lang.level}</p>`).join('')
 
   return `
     <html>
       <head>
         <meta charset="UTF-8" />
         <style>
-          body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
-          h1 { font-size: 2em; margin-bottom: 0; }
-          h2 { margin-top: 30px; border-bottom: 1px solid #ccc; }
-          a { color: #007bff; text-decoration: none; }
-          ul { padding-left: 20px; }
+          body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            padding: 50px 60px;
+            line-height: 1.6;
+            color: #111;
+          }
+
+          h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 4px;
+          }
+
+          .contact {
+            text-align: center;
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 30px;
+          }
+
+          h2 {
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 4px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+          }
+
+          a {
+            color: #007bff;
+            text-decoration: none;
+          }
+
+          li {
+            margin-bottom: 6px;
+          }
         </style>
       </head>
       <body>
         <h1>${personal.fullName}</h1>
-        <p>${personal.city}, ${personal.province} | ${personal.phone} | ${personal.email}</p>
+        <div class="contact">
+          ${personal.city}, ${personal.province} | ${personal.email} | ${personal.phone} <br/>
+          ${formatLinks}
+        </div>
 
-        ${section('Links', formatLinks)}
-        ${section('Profile', `<p>${profile}</p>`)}
-        ${section('Skills', formatSkills)}
-        ${section('Experience', formatExp)}
-        ${section('Education', formatEdu)}
-        ${section('Languages', formatLangs)}
+        <h2>Summary</h2>
+        <p>${profile}</p>
+
+        <h2>Skills</h2>
+        ${formatSkills}
+
+        <h2>Experience</h2>
+        ${formatExp}
+
+        <h2>Education</h2>
+        ${formatEdu}
+
+        <h2>Languages</h2>
+        ${formatLangs}
       </body>
     </html>
   `
