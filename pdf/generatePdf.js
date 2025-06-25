@@ -1,8 +1,11 @@
 const puppeteer = require('puppeteer')
-const generateHTML = require('../templates/harvardTemplate')
+const generateHTMLEN = require('../templates/harvardTemplate(EN)')
+const generateHTMLES = require('../templates/harvardTemplate(ES)')
 
 async function generatePdf(data) {
-  const html = generateHTML(data)
+  const html = data.language === 'en'
+    ? generateHTMLEN(data)
+    : generateHTMLES(data)
   const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
 
@@ -10,7 +13,7 @@ async function generatePdf(data) {
   const pdfBuffer = await page.pdf({
     format: 'A4',
     printBackground: true,
-    margin: { top: '40px', bottom: '40px', left: '40px', right: '40px' },
+    margin: { top: '20px', bottom: '20px', left: '30px', right: '30px' },
   })
 
   await browser.close()
