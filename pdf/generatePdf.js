@@ -6,7 +6,10 @@ async function generatePdf(data) {
   const html = data.language === 'en'
     ? generateHTMLEN(data)
     : generateHTMLES(data)
-  const browser = await puppeteer.launch({ headless: 'new' })
+  const browser = await puppeteer.launch({
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  })
   const page = await browser.newPage()
 
   await page.setContent(html, { waitUntil: 'networkidle0' })
