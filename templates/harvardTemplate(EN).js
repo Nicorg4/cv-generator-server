@@ -24,18 +24,18 @@ module.exports = function generateHTML(data) {
 
   const formatExp = experience.map(exp => `
     <div>
-      <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 3px;">
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px;">
         <span><strong>${exp.position},</strong> ${exp.company}</span>
         <span><strong>${formatDate(exp.startDate)} - ${exp.currentlyWorking ? 'Present' : formatDate(exp.endDate)}</strong></span>
       </div>
-      <ul style="margin-top: 2px; font-size: 14px; padding-left:15px">
+      <ul style="margin-top: 2px; font-size: 13px; padding-left:15px">
         ${exp.description.split('\n').map(bullet => `<li>${bullet}</li>`).join('')}
       </ul>
     </div>
   `).join('')
 
   const formatEdu = education.map(edu => `
-    <div style="display: flex; flex-direction:column; justify-content: space-between; font-size: 14px; margin-bottom: 3px;">
+    <div style="display: flex; flex-direction:column; justify-content: space-between; font-size: 13px; margin-bottom: 3px;">
       <div style="display: flex; justify-content: space-between;">
         <strong>${edu.name}</strong> <strong>${edu.ongoing ? 'In progress' : edu.year}</strong>
       </div>
@@ -64,7 +64,7 @@ module.exports = function generateHTML(data) {
           }
 
           h1 {
-            font-size: 32px;
+            font-size: 30px;
             text-align: center;
             margin-bottom: 0px;
             font-weight: semi-bold;
@@ -72,7 +72,7 @@ module.exports = function generateHTML(data) {
 
           .contact {
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: #444;
           }
 

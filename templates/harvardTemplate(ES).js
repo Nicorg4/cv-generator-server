@@ -13,7 +13,7 @@ module.exports = function generateHTML(data) {
     if (!value) return ''
     const [year, month] = value.split('-')
     const date = new Date(`${year}-${month}-01`)
-    return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(date)
+    return new Intl.DateTimeFormat('es-US', { month: 'short', year: 'numeric' }).format(date)
   }
 
   const formatLinks = links.map(link => `<a href="${link.url}" target="_blank">${link.name}</a>`).join(' | ')
