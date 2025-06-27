@@ -13,7 +13,9 @@ module.exports = function generateHTML(data) {
     if (!value) return ''
     const [year, month] = value.split('-')
     const date = new Date(`${year}-${month}-01`)
-    return new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(date)
+    return new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' })
+      .format(date)
+      .replace(/^(\w)/, c => c.toUpperCase())
   }
 
   const formatLinks = links.map(link => `<a href="${link.url}" target="_blank">${link.name}</a>`).join(' | ')
@@ -37,7 +39,7 @@ module.exports = function generateHTML(data) {
   const formatEdu = education.map(edu => `
     <div style="display: flex; flex-direction:column; justify-content: space-between; font-size: 14px; margin-bottom: 3px;">
       <div style="display: flex; justify-content: space-between;">
-        <strong>${edu.name}</strong> <strong>${edu.ongoing ? 'En curso' : (edu.startYear === edu.endYear ? edu.endYear : edu.startYear + '-' + edu.endYear)}</strong>
+        <strong>${edu.name}</strong> <strong>${edu.ongoing ? edu.startYear + ' - En curso' : (edu.startYear === edu.endYear ? edu.endYear : edu.startYear + ' - ' + edu.endYear)}</strong>
       </div>
       <div>${edu.institution}</div>
     </div>

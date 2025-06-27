@@ -37,7 +37,7 @@ module.exports = function generateHTML(data) {
   const formatEdu = education.map(edu => `
     <div style="display: flex; flex-direction:column; justify-content: space-between; font-size: 13px; margin-bottom: 3px;">
       <div style="display: flex; justify-content: space-between;">
-        <strong>${edu.name}</strong> <strong>${edu.ongoing ? 'In progress' : (edu.startYear === edu.endYear ? edu.endYear : edu.startYear + '-' + edu.endYear)}</strong>
+        <strong>${edu.name}</strong> <strong>${edu.ongoing ? edu.startYear + ' - In progress' : (edu.startYear === edu.endYear ? edu.endYear : edu.startYear + ' - ' + edu.endYear)}</strong>
       </div>
       <div>${edu.institution}</div>
     </div>
@@ -66,13 +66,13 @@ module.exports = function generateHTML(data) {
           h1 {
             font-size: 30px;
             text-align: center;
-            margin-bottom: 0px;
+            margin-bottom: 3px;
             font-weight: semi-bold;
           }
 
           .contact {
             text-align: center;
-            font-size: 13px;
+            font-size: 14px;
             color: #444;
           }
 
